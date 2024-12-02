@@ -4,7 +4,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Form } from "@/shared/ui/shadcn/form";
 import { Button } from "@/shared/ui/shadcn/button";
@@ -16,6 +16,9 @@ import { LoginButton } from "./components/login-button";
 
 export function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
   const [error, setError] = useState<string>("");
 
   const form = useForm<LoginInput>({
@@ -34,6 +37,7 @@ export function LoginForm() {
         email: data.email,
         password: data.password,
         redirect: false,
+        callbackUrl: decodeURIComponent(callbackUrl), // callbackUrl 추가
       });
 
       if (result?.error) {
@@ -43,8 +47,7 @@ export function LoginForm() {
         return;
       }
 
-      router.push("/");
-      router.refresh();
+      router.push(callbackUrl);
     } catch (err) {
       handleGraphQLError(err, {
         context: "Login Form",
