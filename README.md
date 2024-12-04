@@ -11,6 +11,7 @@ GraphQL 기반 API와 Next.js를 활용한 프론트엔드 구현 예제로, 확
 - **TypeScript**: 타입 안정성 보장
 - **Feature-Sliced Design(FSD)**: 모듈화된 구조
 - **NextAuth.js**: 인증 처리
+- Shadcn: 스타일링 및 UI 컴포넌트 라이브러리
 
 ## 프로젝트 구조
 
